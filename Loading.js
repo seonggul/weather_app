@@ -5,7 +5,7 @@ export default Loading = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="white-content" />
-      <Text style={styles.text}>Getting the Awesome Weather</Text>
+      <Text style={styles.text}>Getting the Your Weather</Text>
     </View>
   );
 };

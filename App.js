@@ -16,6 +16,7 @@ export default class extends React.Component {
       data: {
         main: { temp },
         weather,
+        name,
       },
     } = await axios.get(
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${API_KEY}&units=metric`
@@ -23,17 +24,17 @@ export default class extends React.Component {
     this.setState({
       isLoading: false,
       condition: weather[0].main,
+      name,
       temp,
     });
   };
   getLocation = async () => {
     try {
       await Location.requestPermissionsAsync();
-      let {
+      const {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
       this.getWeather(latitude, longitude);
-      this.setState({ isLoading: false });
     } catch (error) {
       Alert.alert("Can't find you", "So sad");
     }
@@ -42,11 +43,11 @@ export default class extends React.Component {
     this.getLocation();
   }
   render() {
-    const { isLoading, temp, condition } = this.state;
+    const { isLoading, temp, condition, name } = this.state;
     return isLoading ? (
       <Loading />
     ) : (
-      <Weather temp={Math.round(temp)} condition={condition} />
+      <Weather temp={Math.round(temp)} condition={condition} name={name} />
     );
   } //Math.round() 함수는 소수점 첫째자리에서 반올림하여 정수로 반환하는 함수
 }
